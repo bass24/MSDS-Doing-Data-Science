@@ -1,0 +1,80 @@
+---
+title: "CRB_LiveAssignment04"
+author: "Ryan Bass"
+date: "February 5, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#FiveThirtyEight Data (30 points): Navigate on GitHub to https://github.com/rudeboybert/fivethirtyeight and read README.md. Seriously, it will include everything you need. 
+
+##	.	Install the fivethirtyeight package.
+
+##	.	In the listing of Data sets in package 'fivethirtyeight,' assign the eighteenth data set to an object 'df.'
+
+##	.	Use a more detailed list of the data sets to write out the URL in a comment to the related news story.
+
+##	.	Using R command(s), give the dimensions and column names of this data frame.
+
+```{r fivethirtyeight, echo=TRUE}
+library(fivethirtyeight)
+df <- fivethirtyeight::college_recent_grads
+#The raw data behind the story "The Economic Guide To Picking A College Major" http://fivethirtyeight.com/features/the-economic-guide-to-picking-a-college-major/.
+dim(df)
+#The dimensions of this data set are 173 observations (rows) and 21 columns (variables)
+colnames(df)
+```
+
+#Data Summary (30 points): Use your newly assigned data frame for Question 2. 
+
+##	.	Write an R command that gives you the column names of the data frame.  Right after that, write one that counts the number of columns but not rows.  Hint: The number should match one of your numbers in Question 1d for dimensions.
+
+##	.	Generate a count of each unique major_category in the data frame.  I recommend using libraries to help.  I have demonstrated one briefly in live-session.  To be clear, this should look like a matrix or data frame containing the major_category and the frequency it occurs in the dataset.  Assign it to major_count.
+
+##	.	To make things easier to read, put par(las=2) before your plot to make the text perpendicular to the axis.  Make a barplot of major_count.  Make sure to label the title with something informative (check the vignette if you need), label the x and y axis, and make it any color other than grey.  Assign the major_category labels to their respective bar.  Flip the barplot horizontally so that bars extend to the right, not upward.  All of these options can be done in a single pass of barplot(). Note: It's okay if it's wider than the preview pane.
+
+##	.	Write the fivethirtyeight data to a csv file.  Make sure that it does not have row labels.
+
+```{r barplot, echo=TRUE}
+colnames(df)
+length(colnames(df))
+major_count <- data.frame(unique(df$major_category), c(length(df$major_category[df$major_category=="Engineering"]), length(df$major_category[df$major_category=="Business"]), length(df$major_category[df$major_category=="Physical Science"]), length(df$major_category[df$major_category=="Law & Public Policy"]), length(df$major_category[df$major_category=="Computers & Mathematics"]), length(df$major_category[df$major_category=="Agriculture & Natural Resources"]), length(df$major_category[df$major_category=="Industrial Arts & Consumer Services"]), length(df$major_category[df$major_category=="Arts"]), length(df$major_category[df$major_category=="Health"]), length(df$major_category[df$major_category=="Social Science"]), length(df$major_category[df$major_category=="Biology & Life Science"]), length(df$major_category[df$major_category=="Education"]), length(df$major_category[df$major_category=="Humanities & Liberal Arts"]), length(df$major_category[df$major_category=="Psychology & Social Work"]), length(df$major_category[df$major_category=="Communications & Journalism"]), length(df$major_category[df$major_category=="Interdisciplinary"])))
+colnames(major_count) <- c("major_category", "counts")
+par(las=2)
+barplot(major_count$counts, main="Recent College Graduates Majors", ylab="Majors", xlab="Counts", col="red", horiz=T, las=1, names.arg=major_count$major_category, cex.names=0.5, xlim=c(0,30))
+write.csv(df, "538 recent college grads major category.csv", row.names=FALSE)
+```
+
+#Codebook (30 points):
+
+##	.	Start a new repository on GitHub for your SMU MSDS homework.  On your local device, make sure there is a directory for Homework at the minimum; you are welcome to add whatever you would like to this repo in addition to your requirements here.
+
+Git Bash code:
+git clone https://github.com/bass24/MSDS-Doing-Data-Science.git
+cd 'MSDS-Doing-Data-Science'
+mkdir Homework
+cd Homework
+mkdir 'Unit 5'
+echo "README for Unit 4 homework, this was made in Git Bash. Credit to fivethirtyeight for the data set college_recent_grads from http://fivethirtyeight.com/features/the-economic-guide-to-picking-a-college-major/" > README-unit5-hw.txt
+git add readme-unit4-hw.txt
+git commit -m "attempt to add my hw5 readme file"
+git push
+	
+##	.	Create a README.md file which explains the purpose of the repository, the topics included, the sources for the material you post, and contact information in case of questions. Remember, the one in the root directory should be general.  You are welcome to make short READMEs for each assignment individually in other folders.
+
+Master README was made through GitHub GUI.
+
+##	.	In one (or more) of the nested directories, post your RMarkdown script, HTML file, and data from 'fivethirtyeight.'  Make sure that in your README or elsewhere that you credit fivethirtyeight in some way.
+
+Credit given to fivethirtyeight in README made through git bash. RMarkdown script, HTML, and .csv data were added via GitHub GUI.
+
+##	.	In your RMarkdown script, please provide the link to this GitHub so the grader can see it.
+
+Link to master on GitHub:
+https://github.com/bass24/MSDS-Doing-Data-Science.git
+
+
+
