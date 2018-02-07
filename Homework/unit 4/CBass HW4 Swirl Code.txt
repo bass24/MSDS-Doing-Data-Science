@@ -1,0 +1,71 @@
+
+Clovis Ryan Bass HW4 Swirl Code
+Module 15:
+library(swirl)
+swirl()
+data(cars)
+?cara
+?cars
+head(cars)
+plot(cars)
+?plot
+plot(x=speed, y=dist)
+plot(x=cars$speed, y=cars$dist)
+plot(x=cars$dist, y=cars$speed)
+plot(x=cars$dist, y=cars$speed, xlab="Speed")
+plot(x=cars$speed, y=cars$dist, xlab="Speed")
+plot(x=cars$speed, y=cars$dist, xlab="Speed", ylab="Stopping Distance"
+)
+plot(x=cars$speed, y=cars$dist, xlab="Speed", ylab="Stopping Distance")
+plot(x=cars$speed, y=cars$dist, ylab="Stopping Distance")
+plot(x=cars$speed, y=cars$dist, ylab="Stopping Distance", xlab="Speed")
+plot(cars, main="My Plot")
+plot(cars, sub="My Plot Subtitle")
+plot(cars, col=2)
+plot(cars, xlim=c(10,15))
+?points
+plot(cars, pch=2
+)
+library(mtcars)
+mtcars
+data(mtcars)
+?boxplot
+boxplot(mpg ~ cyl, data=mtcars)
+hist(mtcars$mpg)
+
+...
+
+  |==================================================================================          |  89%
+| Use boxplot() with formula = mpg ~ cyl and data = mtcars to create a box plot.
+
+> boxplot(mpg ~ cyl, data=mtcars)
+
+| You are quite good my friend!
+
+  |====================================================================================        |  91%
+| The plot shows that mpg is much lower for cars with more cylinders. Note that we can use the same
+| set of arguments that we explored with plot() above to add axis labels, titles and so on.
+
+...
+
+  |======================================================================================      |  93%
+| When looking at a single variable, histograms are a useful tool. hist() is the associated R
+| function. Like plot(), hist() is best used by just passing in a single vector.
+
+...
+
+  |========================================================================================    |  96%
+| Use hist() with the vector mtcars$mpg to create a histogram.
+
+> hist(mtcars$mpg)
+
+| You got it right!
+
+  |==========================================================================================  |  98%
+| In this lesson, you learned how to work with base graphics in R. The best place to go from here is
+| to study the ggplot2 package. If you want to explore other elements of base graphics, then this web
+| page (http://www.ling.upenn.edu/~joseff/rstudy/week4.html) provides a useful overview.
+
+...
+
+  |============================================================================================| 100%
