@@ -1,0 +1,74 @@
+---
+title: "CBass_Livesession5assignment"
+author: "Ryan Bass"
+date: "February 11, 2018"
+output: html_document
+---
+
+#1.	Data Munging (30 points): Utilize yob2016.txt for this question. This file is a series of popular children's names born in the year 2016 in the United States.  It consists of three columns with a first name, a gender, and the amount of children given that name.  However, the data is raw and will need cleaning to make it tidy and usable.
+
+##a.	First, import the .txt file into R so you can process it.  Keep in mind this is not a CSV file.  You might have to open the file to see what you're dealing with.  Assign the resulting data frame to an object, df, that consists of three columns with human-readable column names for each.
+
+```{r, data input, echo=TRUE}
+yob2016 <- read.table('C:\\Users\\Clovis\\Desktop\\School\\SMU Data Science\\Spring 2018\\Doing Data Science MSDS 6306\\Unit 5\\yob2016.txt')
+library(tidyr)
+df <- separate(yob2016, V1, c("Name", "Sex", "Count"))
+```
+
+##b.	Display the summary and structure of df
+
+```{r, display data, echo=TRUE}
+summary(df)
+str(df)
+```
+
+##c.	Your client tells you that there is a problem with the raw file.  One name was entered twice and misspelled.  The client cannot remember which name it is; there are thousands he saw! But he did mention he accidentally put three y's at the end of the name.  Write an R command to figure out which name it is and display it.
+
+```{r, mistake yyy, echo=TRUE}
+grep("yyy$", df$Name)
+df$Name[212]
+```
+
+#3.	Data Summary (30 points): Utilize your data frame object final for this part.
+
+##a.	Create a new column called "Total" in final that adds the amount of children in 2015 and 2016 together.  In those two years combined, how many people were given popular names?
+
+```{r, merge and add, echo=TRUE}
+yob2015 <- read.table('C:\\Users\\Clovis\\Desktop\\School\\SMU Data Science\\Spring 2018\\Doing Data Science MSDS 6306\\Unit 5\\yob2015.txt')
+df2 <- separate(yob2015, V1, c("Name", "Sex", "Count"))
+mergedDF <- merge(df, df2, union("Name", "Sex"), all=TRUE)
+mergedDF$Count.x <- as.numeric(mergedDF$Count.x)
+mergedDF$Count.y <- as.numeric(mergedDF$Count.y)
+mergedDF$Count.x[is.na(mergedDF$Count.x)] <- 0
+mergedDF$Count.y[is.na(mergedDF$Count.y)] <- 0
+library(dplyr)
+mergedDF <- mutate(mergedDF, Total = Count.x+Count.y)
+names(mergedDF) = c("Name", "Sex", "Count2016", "Count2015", "Total")
+head(mergedDF)
+```
+
+##b.	Sort the data by Total.  What are the top 10 most popular names?
+
+```{r, sorted merged top10 data, echo=TRUE}
+sortedmergedDF <- mergedDF[order(mergedDF$Total, decreasing=TRUE),]
+head(sortedmergedDF, 10)
+```
+
+##c.	The client is expecting a girl!  Omit boys and give the top 10 most popular girl's names.
+
+```{r, girls only!, echo=TRUE}
+sorted.gender.mergedDF <- arrange(sortedmergedDF, Sex)
+head(sorted.gender.mergedDF, 10)
+```
+
+##d.	Write these top 10 girl names and their Totals to a CSV file.  Leave out the other columns entirely.
+
+```{r, girls only csv, echo=TRUE}
+top10girlsnames <- sorted.gender.mergedDF
+top10girlsnames$Count2016 <- NULL
+top10girlsnames$Count2015 <- NULL
+top10girlsnames$Sex <- NULL
+top10girlsnames <- head(top10girlsnames,10)
+top10girlsnames
+write.csv(top10girlsnames, file = "Top10 girls names.csv")
+```
