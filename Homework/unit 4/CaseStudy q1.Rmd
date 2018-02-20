@@ -1,0 +1,25 @@
+---
+title: "Case Study 1"
+author: "Ryan Bass"
+date: "February 14, 2018"
+output: html_document
+---
+
+changed files to both have Brew_ID to merge on that value
+
+```{r q1 how many breweries per state, echo=TRUE}
+beers <- read.csv('C:\\Users\\Clovis\\Desktop\\School\\SMU Data Science\\Spring 2018\\Doing Data Science MSDS 6306\\Unit 6 Case Study\\Case Study\\Beers.csv', sep=",", header=TRUE)
+breweries <- read.csv('C:\\Users\\Clovis\\Desktop\\School\\SMU Data Science\\Spring 2018\\Doing Data Science MSDS 6306\\Unit 6 Case Study\\Case Study\\Breweries.csv', sep=",", header=TRUE)
+breweries.per.state <- aggregate(data.frame(count=breweries$State), list(value=breweries$State), length)
+breweries.per.state
+```
+
+```{r q4 median ABV and IBU per state bar chart, echo=TRUE}
+beer_breweries_merge <- merge(breweries,beers, by = "Brew_ID")
+median.abv.per.state <- aggregate(data.frame(median=beer_breweries_merge$ABV), list(value=beer_breweries_merge$State), median)
+names(median.abv.per.state) = c("State", "Median ABV")
+median.ibu.per.state <- aggregate(data.frame(median=beer_breweries_merge$IBU), list(value=beer_breweries_merge$State), median)
+names(median.ibu.per.state) = c("State", "Median IBU")
+median.df <- merge(median.abv.per.state, median.ibu.per.state, by="State")
+barplot(major_count$counts, main="Recent College Graduates Majors", ylab="Majors", xlab="Counts", col="red", horiz=T, las=1, names.arg=major_count$major_category, cex.names=0.5, xlim=c(0,30))
+```
